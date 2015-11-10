@@ -1,0 +1,13 @@
+#!/bin/bash
+while read oldrev newrev ref
+do
+  branch=`echo $ref | cut -d/ -f3`
+  if [ "ec2" == "$branch" -o "master" == "$branch" ]; then
+    git --work-tree=/home/user/www/ checkout -f $branch
+    echo 'Changes pushed to Production.'
+  fi
+  if [ "ec2" == "$branch" -o "Developer" == "$branch" ]; then
+    git --work-tree=/var/www/html/developer/ checkout -f $branch
+    echo 'Changes pushed to Developer.'
+  fi
+done
